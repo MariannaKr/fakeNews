@@ -16,7 +16,7 @@ from sklearn.metrics import classification_report
 import joblib
 import time
 
-news_data = pd.read_csv('train.csv')
+news_data = pd.read_csv('data/train.csv')
 print(news_data.head())
 print(news_data.shape)
 

@@ -29,22 +29,21 @@
       }
 
       .tablink:hover {
-        background-color: #777;
+        background-color: rgb(207, 204, 204);
       }
 
       /* Style the tab content (and add height:100% for full page content) */
       .tabcontent {
-        color: white;
         display: none;
         padding: 100px 20px;
         height: 100%;
       }
 
       #CSV {
-        background-color: rgb(78, 72, 72);
+        background-color: rgb(255, 250, 250);
       }
       #Single {
-        background-color: rgb(85, 77, 77);
+        background-color: rgb(255, 255, 255);
       }
 
       .form-style input,
@@ -107,7 +106,7 @@
       <div id="csv-form">
         <form action="/predictCSV" method="post" enctype="multipart/form-data">
           <br />
-          <input type="file" name="article_file" />
+          <input type="file" name="article_file" required/>
           <br />
           <input type="submit" value="Predict" />
         </form>

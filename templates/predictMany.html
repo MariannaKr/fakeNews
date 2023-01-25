@@ -30,31 +30,39 @@
     <th>Title</th>
     <th>Logistic Regression</th>
     <th>SVM</th>
+    <th>Label</th>
   </tr>
   {% for category in categories %}
   <tr>
-    <td>{{ category[0] }}</td>
+    <td>{{ category[0] }} <div hidden="hidden"> {{ category[3] }} </div></td>
     <td id="category_logRegression">{{ category[1] }}</td>
     <td id="category_svm">{{ category[2] }}</td>
+    <td id="label">{{ category[4] }}</td>
   </tr>
   {% endfor %}
 </table>
 
 <script>
-  var logRegressionElements = document.querySelectorAll(
-    "#category_logRegression"
-  );
+
+  var logRegressionElements = document.querySelectorAll("#category_logRegression");
   var svmElements = document.querySelectorAll("#category_svm");
+  var labelElements = document.querySelectorAll("#label");
+
   for (var i = 0; i < logRegressionElements.length; i++) {
     if (logRegressionElements[i].innerHTML === "1") {
-      logRegressionElements[i].innerHTML = "Real";
-    } else {
       logRegressionElements[i].innerHTML = "Fake";
+    } else {
+      logRegressionElements[i].innerHTML = "Real";
     }
     if (svmElements[i].innerHTML === "1") {
-      svmElements[i].innerHTML = "Real";
-    } else {
       svmElements[i].innerHTML = "Fake";
+    } else {
+      svmElements[i].innerHTML = "Real";
+    }
+    if (labelElements[i].innerHTML === "1") {
+      labelElements[i].innerHTML = "Fake";
+    } else {
+      labelElements[i].innerHTML = "Real";
     }
   }
 
