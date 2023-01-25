@@ -35,11 +35,9 @@ def predict_csv():
             if not pd.isna(row['title']):
                 text += str(row['title']) + ' '
             text += str(row['text'])
-
-            print(type(text)) 
             pred = predict_category(text, vectorizer, logRegression, svm, title)
             predictions.append(pred)
-    return render_template('predictCSV.html', categories=predictions)
+    return render_template('predictMany.html', categories=predictions)
 
 if __name__ == '__main__':
     app.run(debug=True)

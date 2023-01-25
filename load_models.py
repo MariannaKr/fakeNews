@@ -11,6 +11,7 @@ def load():
     vectorizer = joblib.load('saved_models/vectorizer.pkl')
     return logRegression, svm, vectorizer
 
+nltk.download('stopwords')
 port_stem = PorterStemmer()
 
 def stemming(content):
@@ -25,8 +26,8 @@ def predict_category(text, vectorizer, logRegression, svm,title):
     text = stemming(text)
     X = vectorizer.transform([text])
     category_logRegression = logRegression.predict(X)[0]
-    print(category_logRegression)
+    #print(category_logRegression)
     category_svm = svm.predict(X)[0]
-    print(category_svm)
+    #print(category_svm)
     return title,category_logRegression,category_svm
 

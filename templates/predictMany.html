@@ -1,1 +1,92 @@
-<h1> {{ categories }}</h1>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  th,
+  td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+
+<form>
+  <input type="checkbox" id="real_svm" onchange="filterTable()" />
+  <label for="real_svm">Real on SVM</label>
+  <input type="checkbox" id="fake_svm" onchange="filterTable()" />
+  <label for="fake_svm">Fake on SVM</label>
+  <input type="checkbox" id="real_regression" onchange="filterTable()" />
+  <label for="real_regression">Real on Logistic Regression</label>
+  <input type="checkbox" id="fake_regression" onchange="filterTable()" />
+  <label for="fake_regression">Fake on Logistic Regression</label>
+</form>
+
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Logistic Regression</th>
+    <th>SVM</th>
+  </tr>
+  {% for category in categories %}
+  <tr>
+    <td>{{ category[0] }}</td>
+    <td id="category_logRegression">{{ category[1] }}</td>
+    <td id="category_svm">{{ category[2] }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+<script>
+  var logRegressionElements = document.querySelectorAll(
+    "#category_logRegression"
+  );
+  var svmElements = document.querySelectorAll("#category_svm");
+  for (var i = 0; i < logRegressionElements.length; i++) {
+    if (logRegressionElements[i].innerHTML === "1") {
+      logRegressionElements[i].innerHTML = "Real";
+    } else {
+      logRegressionElements[i].innerHTML = "Fake";
+    }
+    if (svmElements[i].innerHTML === "1") {
+      svmElements[i].innerHTML = "Real";
+    } else {
+      svmElements[i].innerHTML = "Fake";
+    }
+  }
+
+  function filterTable() {
+    var table = document.getElementsByTagName("table")[0];
+    var rows = table.getElementsByTagName("tr");
+    var realSvm = document.getElementById("real_svm").checked;
+    var fakeSvm = document.getElementById("fake_svm").checked;
+    var realRegression = document.getElementById("real_regression").checked;
+    var fakeRegression = document.getElementById("fake_regression").checked;
+
+    if (!realSvm && !fakeSvm && !realRegression && !fakeRegression) {
+      for (var i = 1; i < rows.length; i++) {
+        rows[i].style.display = "table-row";
+      }
+      return;
+    }
+    for (var i = 1; i < rows.length; i++) {
+      var svm = rows[i].getElementsByTagName("td")[2].innerHTML;
+      var regression = rows[i].getElementsByTagName("td")[1].innerHTML;
+      if (
+        (svm === "Real" && realSvm) ||
+        (svm === "Fake" && fakeSvm) ||
+        (regression === "Real" && realRegression) ||
+        (regression === "Fake" && fakeRegression)
+      ) {
+        rows[i].style.display = "table-row";
+      } else {
+        rows[i].style.display = "none";
+      }
+    }
+  }
+</script>
+<br /><br />
+<input type="button" value="Go Back" onclick="window.location.href='/'" />

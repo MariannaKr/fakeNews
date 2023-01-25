@@ -1,20 +1,136 @@
-<form action="/predict" method="post">
-    <label for="author">Author:</label>
-    <input type="text" id="author" name="author">
-    <br>
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title">
-    <br>
-    <label for="article">Article:</label>
-    <textarea name="article" rows="4" cols="50"></textarea>
-    <br>
-    <input type="submit" value="Predict">
-</form>
-  
-<form action="/predictCSV" method="post" enctype="multipart/form-data">
-    <textarea name="article" rows="4" cols="50"></textarea>
-    <br>
-    <input type="file" name="article_file">
-    <br>
-    <input type="submit" value="Predict">
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      /* Set height of body and the document to 100% */
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        font-family: Arial;
+      }
+
+      /* Style tab links */
+      .tablink {
+        background-color: #555;
+        color: rgb(0, 0, 0);
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 25%;
+      }
+
+      .tablink:hover {
+        background-color: #777;
+      }
+
+      /* Style the tab content (and add height:100% for full page content) */
+      .tabcontent {
+        color: white;
+        display: none;
+        padding: 100px 20px;
+        height: 100%;
+      }
+
+      #CSV {
+        background-color: rgb(78, 72, 72);
+      }
+      #Single {
+        background-color: rgb(85, 77, 77);
+      }
+
+      .form-style input,
+      .form-style textarea {
+        border: 1px solid gray;
+        border-radius: 4px;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        width: 100%;
+      }
+      .form-style label {
+        font-size: 16px;
+        margin-bottom: 8px;
+        display: block;
+        color: rgb(0, 0, 0);
+      }
+      .form-style input[type="submit"] {
+        background-color: #4caf50;
+        color: rgb(0, 0, 0);
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+      }
+      .form-style input[type="submit"]:hover {
+        background-color: #45a049;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <button class="tablink" onclick="openPage('CSV', this, 'gray')" id="defaultOpen">
+      Upload CSV
+    </button>
+    <button class="tablink" onclick="openPage('Single', this, 'gray')">
+      Single Article
+    </button>
+
+    <div id="Single" class="tabcontent">
+      <div id="single-form">
+        <form action="/predict" method="post">
+          <label for="author">Author:</label>
+          <input type="text" id="author" name="author" />
+          <br />
+          <label for="title">Title:</label>
+          <input type="text" id="title" name="title" />
+          <br />
+          <label for="article">Article:</label>
+          <textarea name="article" rows="4" cols="50"></textarea>
+          <br />
+          <input type="submit" value="Predict" />
+        </form>
+      </div>
+    </div>
+
+    <div id="CSV" class="tabcontent">
+      <div id="csv-form">
+        <form action="/predictCSV" method="post" enctype="multipart/form-data">
+          <br />
+          <input type="file" name="article_file" />
+          <br />
+          <input type="submit" value="Predict" />
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function openPage(pageName, elmnt, color) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+          tabcontent[i].style.display = "none";
+        }
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+          tablinks[i].style.backgroundColor = "";
+        }
+        document.getElementById(pageName).style.display = "block";
+        elmnt.style.backgroundColor = color;
+      }
+
+      // Get the element with id="defaultOpen" and click on it
+      document.getElementById("defaultOpen").click();
+    </script>
+  </body>
+</html>
