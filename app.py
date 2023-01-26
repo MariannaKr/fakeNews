@@ -21,7 +21,8 @@ def index():
 @app.route('/predict', methods=['POST'])
 def predict():
     logRegression, svm, vectorizer = load()
-    article = request.form['article']+' '+request.form['title']+' '+request.form['author']
+    #news_data['content'] = news_data['author']+' '+news_data['title']#+' '+news_data['text']
+    article = request.form['author']+' '+request.form['title']+' '+request.form['text']
     title = request.form['title']
     try:
         categories = predict_category(article, vectorizer, logRegression, svm, title)
@@ -50,7 +51,7 @@ def predict_csv():
             text = ''
             text += str(row['author']) + ' '
             text += str(row['title']) + ' '
-            text += str(row['text'])
+            #text += str(row['text'])
             pred = predict_categories(text, vectorizer, logRegression, svm, title, article_id, label)
             predictions.append(pred)
             predictionLog = str(pred[1])

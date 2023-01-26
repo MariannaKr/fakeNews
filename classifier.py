@@ -30,7 +30,7 @@ news_data = news_data.fillna('')
 news_data.isnull().sum()
 
 # merging the author name and news title
-news_data['content'] = news_data['author']+' '+news_data['title']+' '+news_data['text']
+news_data['content'] = news_data['author']+' '+news_data['title']#+' '+news_data['text']
 print(news_data['content'])
 
 #stemming
@@ -60,7 +60,7 @@ vectorizer = TfidfVectorizer()
 vectorizer.fit(X)
 X = vectorizer.transform(X)
 
-joblib.dump(vectorizer, 'saved_models/vectorizer.pkl')
+joblib.dump(vectorizer, 'saved_models/vectorizer-no-text.pkl')
 
 """## Classification """
 
@@ -85,7 +85,7 @@ time_to_predict_lg = float(end - start)
 
 lg_accuracy = accuracy_score(lg_predictions, Y_test)
 
-joblib.dump(logRegression, 'saved_models/logRegression.pkl')
+joblib.dump(logRegression, 'saved_models/logRegression-no-text.pkl')
 
 
 print('Accuracy score of Logistic Regression : ', "%.3f" % lg_accuracy)
@@ -109,7 +109,7 @@ time_to_predict_svm = float(end - start)
 
 svm_accuracy = accuracy_score(svm_predictions, Y_test)
 
-joblib.dump(svm, 'saved_models/svm.pkl')
+joblib.dump(svm, 'saved_models/svm-no-text.pkl')
 
 print('Accuracy score of SVM : ', "%.3f" % svm_accuracy)
 print('Time to train SVM : ', "%.6f" % time_to_train_svm, " seconds")

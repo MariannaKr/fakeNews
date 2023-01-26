@@ -6,9 +6,12 @@ from nltk.stem.porter import PorterStemmer
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 def load():
-    logRegression = joblib.load('saved_models/logRegression.pkl')
-    svm = joblib.load('saved_models/svm.pkl')
-    vectorizer = joblib.load('saved_models/vectorizer.pkl')
+    logRegression = joblib.load('saved_models/logRegression-no-text.pkl')
+    svm = joblib.load('saved_models/svm-no-text.pkl')
+    vectorizer = joblib.load('saved_models/vectorizer-no-text.pkl')
+    #logRegression = joblib.load('saved_models/logRegression.pkl')
+    #svm = joblib.load('saved_models/svm.pkl')
+    #vectorizer = joblib.load('saved_models/vectorizer.pkl')
     return logRegression, svm, vectorizer
 
 nltk.download('stopwords')
