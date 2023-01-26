@@ -22,7 +22,7 @@ def stemming(content):
     review = ' '.join(review)
     return review
 
-def predict_category(text, vectorizer, logRegression, svm, title, article_id, label):
+def predict_categories(text, vectorizer, logRegression, svm, title, article_id, label):
     text = stemming(text)
     X = vectorizer.transform([text])
     category_logRegression = logRegression.predict(X)[0]
@@ -31,3 +31,11 @@ def predict_category(text, vectorizer, logRegression, svm, title, article_id, la
     #print(category_svm)
     return title, category_logRegression, category_svm, article_id, label
 
+def predict_category(text, vectorizer, logRegression, svm, title):
+    text = stemming(text)
+    X = vectorizer.transform([text])
+    category_logRegression = logRegression.predict(X)[0]
+    #print(category_logRegression)
+    category_svm = svm.predict(X)[0]
+    #print(category_svm)
+    return title, category_logRegression, category_svm

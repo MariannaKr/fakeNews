@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+
 <style>
   table {
     border-collapse: collapse;
@@ -34,7 +36,10 @@
   </tr>
   {% for category in categories %}
   <tr>
-    <td>{{ category[0] }} <div hidden="hidden"> {{ category[3] }} </div></td>
+    <td>
+      {{ category[0] }}
+      <a href="{{ url_for('read', id=category[3]) }}"> <i class="fas fa-eye"></i> 
+    </td>
     <td id="category_logRegression">{{ category[1] }}</td>
     <td id="category_svm">{{ category[2] }}</td>
     <td id="label">{{ category[4] }}</td>
@@ -43,8 +48,9 @@
 </table>
 
 <script>
-
-  var logRegressionElements = document.querySelectorAll("#category_logRegression");
+  var logRegressionElements = document.querySelectorAll(
+    "#category_logRegression"
+  );
   var svmElements = document.querySelectorAll("#category_svm");
   var labelElements = document.querySelectorAll("#label");
 
