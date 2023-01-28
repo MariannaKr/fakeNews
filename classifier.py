@@ -11,14 +11,16 @@ from sklearn.svm import SVC
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 from nltk.stem.porter import PorterStemmer
+from sklearn import metrics
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import classification_report
 import joblib
 import time
+import matplotlib.pyplot as plt
 
 news_data = pd.read_csv('data/train.csv')
-print(news_data.head())
-print(news_data.shape)
+#print(news_data.head())
+#print(news_data.shape)
 
 # counting the number of missing values in the dataset
 news_data.isnull().sum()
@@ -31,7 +33,7 @@ news_data.isnull().sum()
 
 # merging the author name and news title
 news_data['content'] = news_data['author']+' '+news_data['title']#+' '+news_data['text']
-print(news_data['content'])
+#print(news_data['content'])
 
 #stemming
 nltk.download('stopwords')
@@ -46,14 +48,14 @@ def stemming(content):
     return review
 
 news_data['content'] = news_data['content'].apply(stemming)
-print(news_data['content'])
+#print(news_data['content'])
 
 #separating the data and label
 X = news_data['content'].values
 Y = news_data['label'].values
 
-print(X)
-print(Y)
+#print(X)
+#print(Y)
 
 # converting the textual data to numerical data
 vectorizer = TfidfVectorizer()
@@ -66,7 +68,6 @@ joblib.dump(vectorizer, 'saved_models/vectorizer-no-text.pkl')
 
 #split train & test data
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size = 0.1, stratify=Y, random_state=30)
-X_test.shape
 
 """### Classifier 1"""
 
@@ -88,9 +89,9 @@ lg_accuracy = accuracy_score(lg_predictions, Y_test)
 joblib.dump(logRegression, 'saved_models/logRegression-no-text.pkl')
 
 
-print('Accuracy score of Logistic Regression : ', "%.3f" % lg_accuracy)
+print('\nAccuracy score of Logistic Regression : ', "%.3f" % lg_accuracy)
 print('Time to train Logistic Regression : ', "%.6f" % time_to_train_lg, " seconds")
-print('Time for predictions with Logistic Regression : ', "%.6f" % time_to_predict_lg, " seconds")
+print('Time for predictions with Logistic Regression : ', "%.6f" % time_to_predict_lg, " seconds\n")
 
 """### Classifier 2"""
 
@@ -113,4 +114,22 @@ joblib.dump(svm, 'saved_models/svm-no-text.pkl')
 
 print('Accuracy score of SVM : ', "%.3f" % svm_accuracy)
 print('Time to train SVM : ', "%.6f" % time_to_train_svm, " seconds")
-print('Time for predictions with SVM : ', "%.6f" % time_to_predict_svm, " seconds")
+print('Time for predictions with SVM : ', "%.6f" % time_to_predict_svm, " seconds\n")
+
+#create confusion matrix for lg
+cm_lg = metrics.confusion_matrix(Y_test, lg_predictions)
+cmlg_display = metrics.ConfusionMatrixDisplay(confusion_matrix = cm_lg, display_labels = ['Real', 'Fake'])
+cmlg_display.plot()
+plt.title("\n Confusion Matrix for Logistic Regression \n")
+
+#create confusion matrix for svm
+cm_svm = metrics.confusion_matrix(Y_test, svm_predictions)
+cmsvm_display = metrics.ConfusionMatrixDisplay(confusion_matrix = cm_svm, display_labels = ['Real', 'Fake'])
+cmsvm_display.plot()
+plt.title("\n Confusion Matrix for SVM \n")
+
+plt.show()
+
+
+
+
