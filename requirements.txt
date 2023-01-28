@@ -1,0 +1,10 @@
+apyori==1.1.2
+Flask==2.2.2
+joblib==1.2.0
+matplotlib==3.6.2
+nltk==3.8.1
+numpy==1.23.4
+pandas==1.5.1
+pymongo==4.3.3
+scikit_learn==1.2.1
+scipy==1.10.0
