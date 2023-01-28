@@ -22,7 +22,7 @@ def index():
 def predict():
     logRegression, svm, vectorizer = load()
     #news_data['content'] = news_data['author']+' '+news_data['title']#+' '+news_data['text']
-    article = request.form['author']+' '+request.form['title']+' '+request.form['text']
+    article = request.form['author']+' '+request.form['title']#+' '+request.form['text']
     title = request.form['title']
     try:
         categories = predict_category(article, vectorizer, logRegression, svm, title)
@@ -42,6 +42,8 @@ def predict_csv():
     predictions = []
     for file in files:
         data = pd.read_csv(file)
+        data.isnull().sum()
+        data = data.fillna('')
         logRegression, svm, vectorizer = load()
         for index, row in data.iterrows():
             title = str(row['title'])
@@ -51,7 +53,7 @@ def predict_csv():
             text = ''
             text += str(row['author']) + ' '
             text += str(row['title']) + ' '
-            #text += str(row['text'])
+            text += str(row['text'])
             pred = predict_categories(text, vectorizer, logRegression, svm, title, article_id, label)
             predictions.append(pred)
             predictionLog = str(pred[1])
