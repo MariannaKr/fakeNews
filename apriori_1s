@@ -46,4 +46,4 @@ for item in association_rules:
 df = pd.DataFrame(results, columns=['Rule', 'Support', 'Confidence', 'Lift'])
 
 # Write the DataFrame to a CSV file
-df.to_csv('association_rules_small.csv', index=False)
+df.to_csv('association_rules_1.csv', index=False)
