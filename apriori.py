@@ -1,10 +1,10 @@
+#import libraries
 import pandas as pd
 from apyori import apriori
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import PorterStemmer
 import nltk
-
 
 nltk.download('punkt')
 
@@ -24,26 +24,34 @@ df['tokenized_text'] = df['tokenized_text'].apply(lambda x: [word for word in x 
 # Convert the tokenized text to a list of lists
 text_dataset = df['tokenized_text'].to_list()
 
+#dataset with removal of duplicate words and words with <=3 letters
+
+#new dataset
+articles=[]
+
+for article in text_dataset:
+  article= list( dict.fromkeys(article) )
+  for word in article:
+    if len(word)<=2:
+      article.remove(word)
+  articles.append(article)
+  print(article)
+  print("count of words: ",len(article))
+
+
 # Set the minimum support threshold
-min_support = 0.01
+min_support = 0.6
 
 # Generate association rules
-association_rules = apriori(text_dataset, min_support=min_support)
+association_rules = apriori(articles, min_support=min_support)
 
-# Create a list of tuples where each tuple contains the rule, support, confidence, and lift
-results = []
+# Print the extracted association rules
 for item in association_rules:
     pair = item[0]
     items = [x for x in pair]
     if len(items) >= 2:
-        rule = items[0] + " -> " + items[1]
-        support = item[1]
-        confidence = item[2][0][2]
-        lift = item[2][0][3]
-        results.append((rule, support, confidence, lift))
-
-# Create a DataFrame from the list of tuples
-df = pd.DataFrame(results, columns=['Rule', 'Support', 'Confidence', 'Lift'])
-
-# Write the DataFrame to a CSV file
-df.to_csv('association_rules_small.csv', index=False)
+      print("Rule: " + items[0] + " -> " + items[1])
+      print("Support: " + str(item[1]))
+      print("Confidence: " + str(item[2][0][2]))
+      print("Lift: " + str(item[2][0][3]))
+      print("=====================================")
