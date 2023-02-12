@@ -1,3 +1,31 @@
-<h1> {{ categories }}</h1>
-<br><br>
+<style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th,
+    td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+
+<table>
+    <tr>
+      <th>Title</th>
+      <th>Logistic Regression</th>
+      <th>SVM</th>
+    </tr>
+    <tr>
+      <td>
+        {{ categories[0] }}
+      </td>
+      <td id="category_logRegression">{% if categories[1] == 1 %} Fake {% else %} Real {% endif %}</td>
+      <td id="category_svm">{% if categories[2] == 1 %} Fake {% else %} Real {% endif %}</td>
+    </tr>
+  </table>
 <input type="button" value="Go Back" onclick="window.location.href='/'" />

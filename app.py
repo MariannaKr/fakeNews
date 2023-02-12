@@ -22,7 +22,7 @@ def index():
 def predict():
     logRegression, svm, vectorizer = load()
     #news_data['content'] = news_data['author']+' '+news_data['title']#+' '+news_data['text']
-    article = request.form['author']+' '+request.form['title']#+' '+request.form['text']
+    article = request.form['author']+' '+request.form['title']+' '+request.form['article']
     title = request.form['title']
     try:
         categories = predict_category(article, vectorizer, logRegression, svm, title)
