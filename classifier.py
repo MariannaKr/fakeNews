@@ -32,7 +32,7 @@ news_data = news_data.fillna('')
 news_data.isnull().sum()
 
 # merging the author name and news title
-news_data['content'] = news_data['author']+' '+news_data['title']#+' '+news_data['text']
+news_data['content'] = news_data['author']+' '+news_data['title']+' '+news_data['text']
 #print(news_data['content'])
 
 #stemming
@@ -129,7 +129,3 @@ cmsvm_display.plot()
 plt.title("\n Confusion Matrix for SVM \n")
 
 plt.show()
-
-
-
-
