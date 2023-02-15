@@ -7,10 +7,8 @@ filename = 'data/submit.csv'
 
 client = MongoClient("mongodb://rootuser:rootpass@localhost:27017/")
 
-# Select the database and collection
 db = client["fakenews"]
 collection = db["submit"]
-
 
 df = pd.read_csv(filename)
 
